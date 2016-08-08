@@ -24,7 +24,6 @@ function FormatDate(date) {
 	var h = date.getHours();
 	var m = date.getMinutes();
 	var s = date.getSeconds();
-
 	h = h < 10 ? "0" + h : h;
 	m = m < 10 ? "0" + m : m;
 	s = s < 10 ? "0" + s : s;
@@ -69,9 +68,10 @@ function joinConversation(username) {
 		//接收消息的处理
 		user.on("message", function(message, conversation) {
 			var msg = document.getElementById("msginfo");
-			var time = FormatDate(new Date(message[i].timestamp));
+			var time = FormatDate(new Date(message.timestamp));
 			msg.innerHTML += time + '[' + message.from + ']: ' + message.text + "<br/>";
 		});
+
 	}).catch(console.error.bind(console));
 }
 
