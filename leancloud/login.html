@@ -43,7 +43,7 @@
 		<header>
 			<form onsubmit="event.preventDefault();" style="text-align: center;">
 				<p>
-					<label>用户名</label><input type="text" name="username" id="username" required placeholder="请输入用户名" pattern="^[a-zA-Z]\w{5,15}$" title="用户名为6~16位字母和数字组成" />
+					<label>用户名</label><input type="text" name="username" id="username" required placeholder="请输入用户名" pattern="^[\u4e00-\u9fa5]{3,12}$" title="用户名为3~12位中文组成" />
 				</p>
 				<p>
 					<label>密码</label><input type="password" name="pwd" id="pwd" required placeholder="请输入密码" pattern="^\S{6,16}$" title="密码为6~16位任意字符组成" />

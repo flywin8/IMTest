@@ -106,13 +106,19 @@ function joinConversation(username) {
 		//保存conversation对象
 		myConversation = conversation;
 		//查询在线人数
-		countConversation(conversation);
+		//		countConversation(conversation);
 		//查询历史消息
 		queryMessages(conversation, 20);
 		return conversation;
 	}).then(function(user) {
 		//接收消息的处理
 		user.on("message", function(message, conversation) {
+			var myaudio = document.getElementById("myaudio");
+			var i = parseInt(Math.random() * 10000) % 8 + 1;
+			myaudio.src = "../audio/" + i + ".mp3";
+			myaudio.onloadstart = function() {
+				this.play();
+			};
 			addMsgInfo(message, 0);
 		});
 
