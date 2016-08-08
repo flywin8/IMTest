@@ -2,6 +2,7 @@ var loginname = "";
 
 var realtime;
 var myConversation;
+var userObj;
 
 window.onload = function() {
 	var currentUser = AV.User.current();
@@ -15,8 +16,19 @@ window.onload = function() {
 		//加入默认聊天室
 		joinConversation(currentUser.getUsername());
 	} else {
-//		location.href = "login.html";
+		location.href = "login.html";
 	}
+}
+
+function FormatDate(date) {
+	var h = date.getHours();
+	var m = date.getMinutes();
+	var s = date.getSeconds();
+
+	h = h < 10 ? "0" + h : h;
+	m = m < 10 ? "0" + m : m;
+	s = s < 10 ? "0" + s : s;
+	return h + ":" + m + ":" + s;
 }
 
 function queryMessages(conversation, limit) {
@@ -24,9 +36,10 @@ function queryMessages(conversation, limit) {
 		limit: limit, // limit 取值范围 1~1000，默认 20
 	}).then(function(message) {
 		// 最新的十条消息，按时间增序排列
-		if(message) {
+		for(var i = 0; i < message.length; i++) {
 			var msg = document.getElementById("msginfo");
-			msg.innerHTML += '[' + message.from + ']: ' + message.text + "<br/>";
+			var time = FormatDate(new Date(message[i].timestamp));
+			msg.innerHTML += time + '[' + message[i].from + ']: ' + message[i].text + "<br/>";
 		}
 	}).catch(console.error.bind(console));
 }
@@ -39,23 +52,25 @@ function countConversation(conversation) {
 
 function joinConversation(username) {
 	realtime.createIMClient(username).then(function(user) {
+		//保存user对象
+		userObj = user;
 		return user.getConversation(CONVERSATION_ID);
 	}).then(function(conversation) {
 		return conversation.join();
 	}).then(function(conversation) {
-		console.log('加入成功', conversation.members);
-
 		//保存conversation对象
 		myConversation = conversation;
 		//查询在线人数
 		countConversation(conversation);
 		//查询历史消息
 		queryMessages(conversation, 20);
+		return conversation;
 	}).then(function(user) {
 		//接收消息的处理
 		user.on("message", function(message, conversation) {
 			var msg = document.getElementById("msginfo");
-			msg.innerHTML += '[' + message.from + ']: ' + message.text + "<br/>";
+			var time = FormatDate(new Date(message[i].timestamp));
+			msg.innerHTML += time + '[' + message.from + ']: ' + message.text + "<br/>";
 		});
 	}).catch(console.error.bind(console));
 }
@@ -75,18 +90,19 @@ function joinConversation(username) {
 //			}
 
 function send() {
-	var msg = document.getElementById("message").value;
-	if(msg.trim() != "") {
-		realtime.then(function() {
-			return myConversation.send(new AV.TextMessage(msg.trim()));
-		}).then(function() {
-			msg.value = "";
-		});
+	var msg = document.getElementById("message");
+	if(msg.value.trim() != "") {
+		myConversation.send(new AV.TextMessage(msg.value.trim()));
+		var info = document.getElementById("msginfo");
+		var user = document.getElementById("username").innerHTML;
+		var time = FormatDate(new Date());
+		info.innerHTML += time + '[' + user + ']: ' + msg.value + "<br/>";
+		msg.value = "";
 	}
 }
 
 function exit() {
-	myConversation.close().then(function() {
+	userObj.close().then(function() {
 		location.href = "login.html";
 	}).catch(console.error.bind(console));
 }
