@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css" />
+		<style type="text/css">
+			.top {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				height: 40px;
+				text-align: center;
+				color: white;
+				font-size: 2em;
+				background-color: green;
+			}
+		</style>
+		<script src="../js/av-min-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/appkey.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function login() {
+				var user = document.getElementById("username");
+				var pwd = document.getElementById("pwd");
+				AV.User.logIn(user.value, pwd.value).then(function(loginedUser) {
+					var div = document.createElement("div");
+					div.className = "top";
+					div.innerHTML = "欢迎【" + loginedUser.getUsername() + "】您回来！";
+					document.body.appendChild(div);
+					setTimeout(function() {
+						location.href = "msg.html";
+					}, 3000);
+				}, function(error) {
+					alert(error.message);
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<header>
+			<form onsubmit="event.preventDefault();" style="text-align: center;">
+				<p>
+					<label>用户名</label><input type="text" name="username" id="username" required placeholder="请输入用户名" pattern="^[a-zA-Z]\w{5,15}$" title="用户名为6~16位字母和数字组成" />
+				</p>
+				<p>
+					<label>密码</label><input type="password" name="pwd" id="pwd" required placeholder="请输入密码" pattern="^\S{6,16}$" title="密码为6~16位任意字符组成" />
+				</p>
+				<p>
+					<input class="submit" type="submit" value="登 录" onclick="login()" />
+					<a href="reg.html" class="submit">注 册</a>
+				</p>
+			</form>
+		</header>
+	</body>
+
+</html>

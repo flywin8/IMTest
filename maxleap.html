@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/ml.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			ML.initialize('{{578653c0a5ff7f0001671c89}}', '{{TnVpY0dfdXBVcVAyc2lEMGI5X2didw}}');
+			ML.useCNServer();
+
+			//			var user = new ML.User();
+			//			user.set('username', 'nkcy@admin.com');
+			//			user.set('password', 'nkcy');
+			//			user.set('email', 'nkcy@admin.com');
+			//
+			//			user.signUp().then(function(user) {
+			//				alert('成功');
+			//			});
+
+			var Post = ML.Object.extend('Post');
+			post.set('title', 'post title');
+			post.save().then(function() {
+				alert('success');
+			});
+
+			
+		</script>
+	</head>
+
+	<body>
+
+	</body>
+
+</html>

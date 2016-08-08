@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>注册用户</title>
+		<link rel="stylesheet" type="text/css" href="../css/base.css" />
+		<style type="text/css">
+			.top {
+				position: absolute;
+				top: 0px;
+				width: 100%;
+				height: 40px;
+				text-align: center;
+				color: white;
+				font-size: 2em;
+				background-color: green;
+			}
+		</style>
+		<script src="../js/av-min-1.0.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/appkey.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function reg() {
+				// 新建 AVUser 对象实例
+				var user = new AV.User();
+				// 设置用户名
+				user.setUsername(document.getElementById("username").value);
+				// 设置密码
+				user.setPassword(document.getElementById("pwd").value);
+				// 设置邮箱
+				user.setEmail(document.getElementById("email").value);
+				user.signUp().then(function(loginedUser) {
+					var div = document.createElement("div");
+					div.className = "top";
+					div.innerHTML = "注册成功！3秒钟跳转到登录页面";
+					document.body.appendChild(div);
+					setTimeout(function() {
+						location.href = "login.html";
+					}, 3000);
+				}, (function(error) {
+					alert(error);
+				}));
+			}
+
+			function checkPasswords() {
+				var pass1 = document.getElementById("pwd");
+				var pass2 = document.getElementById("newpwd");
+
+				if(pass1.value != pass2.value) {
+					pass2.setCustomValidity("两次输入的密码不匹配");
+				} else {
+					pass2.setCustomValidity("");
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<form onsubmit="event.preventDefault();" style="text-align: center;">
+			<p>
+				<label>用户名</label><input type="text" name="username" id="username" required placeholder="请输入用户名" pattern="^[a-zA-Z]\w{5,15}$" title="用户名为6~16位字母和数字组成" />
+			</p>
+			<p>
+				<label>密码</label><input type="password" name="pwd" id="pwd" required placeholder="请输入密码" pattern="^\S{6,16}$" title="密码为6~16位任意字符组成" />
+			</p>
+			<p>
+				<label>确认密码</label><input type="password" name="newpwd" id="newpwd" onchange="checkPasswords()" required placeholder="请再次输入密码" title="" />
+			</p>
+			<p>
+				<label>电子邮箱</label><input type="email" name="email" id="email" pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" title="请输入正确的邮箱格式" required placeholder="请再次输入邮箱" />
+			</p>
+			<p>
+				<input class="submit" type="submit" value="注 册" onclick="reg()" />
+				<a href="login.html" class="submit">登 录</a>
+			</p>
+		</form>
+	</body>
+
+</html>

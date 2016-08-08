@@ -1,0 +1,38 @@
+{
+  "leancloud/reg.html": {
+    "href": "leancloud/reg.html",
+    "resources": [
+      "css/base.css",
+      "js/av-min-1.0.0.js",
+      "js/appkey.js"
+    ],
+    "refer": [
+      "leancloud/login.html"
+    ],
+    "priority": 0
+  },
+  "leancloud/msg.html": {
+    "href": "leancloud/msg.html",
+    "resources": [
+      "js/av-min-1.0.0.js",
+      "js/appkey.js"
+    ],
+    "refer": [
+      "leancloud/reg.html"
+    ],
+    "priority": 0
+  },
+  "leancloud/login.html": {
+    "href": "leancloud/login.html",
+    "resources": [
+      "css/base.css",
+      "js/av-min-1.0.0.js",
+      "js/appkey.js"
+    ],
+    "refer": [
+      "leancloud/msg.html",
+      "leancloud/reg.html"
+    ],
+    "priority": 0
+  }
+}

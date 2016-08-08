@@ -1,0 +1,53 @@
+* {
+	padding: 0px;
+	margin: 0px;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+	overflow: hidden;
+	border: 5px solid #CCCCCC;
+}
+
+input[name] {
+	padding: 5px;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.cb {
+	clear: both;
+}
+
+.submit {
+	padding: 10px 20px;
+	background-color: forestgreen;
+	color: white;
+	border-radius: 10px;
+	border: none;
+	font-size: 14px;
+}
+
+label {
+	display: inline-block;
+	width: 80px;
+	text-align: right;
+	font-family: "微软雅黑";
+	margin-right: 5px;
+}
+
+p {
+	margin: 10px;
+}
+
+a {
+	text-decoration: none;
+}

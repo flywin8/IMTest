@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>bmob API</title>
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/styles.css" />
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bmob.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+
+	<body>
+		<script type="text/javascript">
+		
+			Bmob.initialize("50a2d51c5009d33f3a2728b84e0e252e", "2099a36fb4c7fe3ccf5a0365517ed4d6");
+			var TestObject = Bmob.Object.extend("TestObject");
+			var testObject = new TestObject();
+			
+			testObject.save({
+				foo: "bar"
+			}, {
+				success: function(object) {
+					$(".success").show();
+				},
+				error: function(model, error) {
+					$(".error").show();
+				}
+			});
+		</script>
+	</body>
+
+</html>
