@@ -41,6 +41,8 @@
 				}, (function(error) {
 					alert(error);
 				}));
+
+				return false;
 			}
 
 			function checkPasswords() {
@@ -57,9 +59,9 @@
 	</head>
 
 	<body>
-		<form onsubmit="event.preventDefault();" style="text-align: center;">
+		<form onsubmit="return reg()" style="text-align: center;">
 			<p>
-				<label>用户名</label><input type="text" name="username" id="username" required placeholder="请输入用户名" pattern="^[a-zA-Z]\w{5,15}$" title="用户名为6~16位字母和数字组成" />
+				<label>用户名</label><input type="text" name="username" id="username" required placeholder="请输入中文用户名" pattern="^[\u4e00-\u9fa5]{3,12}$" title="用户名为3~12位中文组成" />
 			</p>
 			<p>
 				<label>密码</label><input type="password" name="pwd" id="pwd" required placeholder="请输入密码" pattern="^\S{6,16}$" title="密码为6~16位任意字符组成" />
@@ -71,7 +73,7 @@
 				<label>电子邮箱</label><input type="email" name="email" id="email" pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" title="请输入正确的邮箱格式" required placeholder="请再次输入邮箱" />
 			</p>
 			<p>
-				<input class="submit" type="submit" value="注 册" onclick="reg()" />
+				<input class="submit" type="submit" value="注 册" />
 				<a href="login.html" class="submit">登 录</a>
 			</p>
 		</form>
