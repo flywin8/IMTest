@@ -51,8 +51,8 @@
 				}).then(function(conversation) {
 					console.log('加入成功', conversation.members);
 					//查询在线人数
-					//					countConversation(conversation);
-					//					queryMessages(conversation, 10);
+					countConversation(conversation);
+					queryMessages(conversation, 10);
 				}).catch(console.error.bind(console));
 			}
 
