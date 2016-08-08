@@ -11,6 +11,8 @@
 			var loginname = "";
 
 			var realtime;
+			var myConversation;
+
 			window.onload = function() {
 				var currentUser = AV.User.current();
 				if(currentUser) {
@@ -32,13 +34,13 @@
 					limit: limit, // limit 取值范围 1~1000，默认 20
 				}).then(function(messages) {
 					// 最新的十条消息，按时间增序排列
-					console.log(messages);
+					var msg = document.getElementById("msginfo");
+					msg.innerHTML += '[' + message.from + ']: ' + message.text + "<br/>";
 				}).catch(console.error.bind(console));
 			}
 
 			function countConversation(conversation) {
 				conversation.count().then(function(count) {
-					console.log('在线人数', count);
 					document.getElementById("count").innerHTML = count;
 				}).catch(console.error.bind(console));
 			}
@@ -50,9 +52,19 @@
 					return conversation.join();
 				}).then(function(conversation) {
 					console.log('加入成功', conversation.members);
+
+					//保存conversation对象
+					myConversation = conversation;
 					//查询在线人数
 					countConversation(conversation);
+					//查询历史消息
 					queryMessages(conversation, 10);
+				}).then(function(user) {
+					//接收消息的处理
+					user.on("message", function(message, conversation) {
+						var msg = document.getElementById("msginfo");
+						msg.innerHTML += '[' + message.from + ']: ' + message.text + "<br/>";
+					});
 				}).catch(console.error.bind(console));
 			}
 
@@ -70,6 +82,17 @@
 
 			}
 
+			function send() {
+				var msg = document.getElementById("message").value;
+				if(msg.trim() != "") {
+					realtime.then(function() {
+						return myConversation.send(new AV.TextMessage(msg.trim()));
+					}).then(function() {
+						msg.value = "";
+					});
+				}
+			}
+
 			function exit() {
 
 			}
@@ -83,8 +106,8 @@
 			<input type="button" id="" value="退出" onclick="exit()" />
 		</p>
 
-		<p><textarea name="msg" style="width: 400px;height: 400px;"></textarea></p>
-		<p>内容：<input type="text" id="send" /><input type="button" value="发送" /> </p>
+		<p><textarea readonly="readonly" id="msginfo" name="msginfo" style="width: 400px;height: 400px;"></textarea></p>
+		<p>内容：<input type="text" id="message" /><input type="button" value="发送" onclick="send()" /> </p>
 	</body>
 
 </html>
