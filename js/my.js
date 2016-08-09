@@ -114,11 +114,7 @@ function joinConversation(username) {
 		//接收消息的处理
 		user.on("message", function(message, conversation) {
 			var myaudio = document.getElementById("myaudio");
-			var i = parseInt(Math.random() * 10000) % 8 + 1;
-			myaudio.src = "../audio/" + i + ".mp3";
-			myaudio.onloadstart = function() {
-				this.play();
-			};
+			myaudio.play();
 			addMsgInfo(message, 0);
 		});
 
